@@ -5,6 +5,7 @@ import 'express-async-errors';
 
 import { connectDB } from './configs/dbConnect';
 import { log } from './utils/log';
+import { logEvents } from './utils/logEvents';
 
 const app = express();
 
@@ -22,10 +23,8 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('error', (error) => {
   if (error instanceof Error) {
-    log.error(
-      `Could not connect to MongoDB for the following reason:\n${error.name}: ${error.message}`
-    );
+    logEvents(`${error.name}: ${error.message}`, 'mongoErrorLog.log');
   } else {
-    log.error('Could not connect to MongoDB!');
+    logEvents(`Error: Could not connect to MongoDB`, 'mongoErrorLog.log');
   }
 });
