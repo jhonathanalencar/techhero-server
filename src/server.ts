@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import path from 'node:path';
 import 'dotenv/config';
 import 'express-async-errors';
 
@@ -12,6 +13,24 @@ const app = express();
 connectDB();
 
 const PORT = process.env.PORT ?? 3333;
+
+app.use('/', express.static(path.resolve(__dirname, '..', 'public')));
+
+app.get('/', (request, response) => {
+  response.sendFile(path.resolve(__dirname, 'views', 'index.html'));
+});
+
+app.all('*', (request, response) => {
+  response.status(404);
+
+  if (request.accepts('html') !== undefined) {
+    response.sendFile(path.resolve(__dirname, 'views', '404.html'));
+  } else if (request.accepts('json') !== undefined) {
+    response.json({ message: '404 | Not Found' });
+  } else {
+    response.type('txt').send('404 | Not Found');
+  }
+});
 
 mongoose.connection.on('connected', () => {
   log.info('Connected to MongoDB');
