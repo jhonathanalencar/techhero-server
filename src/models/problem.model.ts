@@ -8,11 +8,12 @@ interface IProblem {
   solution?: mongoose.Types.ObjectId;
   solved?: Date;
   solvedBy?: mongoose.Types.ObjectId;
+  enabled: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const ProblemSchema = new mongoose.Schema<IProblem>(
+const problemSchema = new mongoose.Schema<IProblem>(
   {
     title: {
       type: String,
@@ -38,12 +39,16 @@ const ProblemSchema = new mongoose.Schema<IProblem>(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    enabled: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const Problem = mongoose.model<IProblem>('Problem', ProblemSchema);
+const Problem = mongoose.model<IProblem>('Problem', problemSchema);
 
 export { Problem, IProblem };
