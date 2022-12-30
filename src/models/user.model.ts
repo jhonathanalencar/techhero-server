@@ -1,12 +1,14 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
+type UserRoles = 'admin' | 'manager' | 'user';
+
 interface IUser {
   _id: string;
   name: string;
   email: string;
   password: string;
-  roles: string[];
+  roles: UserRoles[];
   active: boolean;
   createdAt: Date;
   updatedAt: Date;
