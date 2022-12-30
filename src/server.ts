@@ -1,18 +1,21 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import path from 'node:path';
+import cors from 'cors';
 import 'dotenv/config';
 import 'express-async-errors';
 
 import { connectDB } from './configs/dbConnect';
 import { log } from './utils/log';
 import { logEvents } from './utils/logEvents';
+import { logger } from './middlewares/logger';
 
 const app = express();
 
 connectDB();
 
-const PORT = process.env.PORT ?? 3333;
+app.use(cors());
+app.use(logger);
 
 app.use('/', express.static(path.resolve(__dirname, '..', 'public')));
 
@@ -31,6 +34,8 @@ app.all('*', (request, response) => {
     response.type('txt').send('404 | Not Found');
   }
 });
+
+const PORT = process.env.PORT ?? 3333;
 
 mongoose.connection.on('connected', () => {
   log.info('Connected to MongoDB');
