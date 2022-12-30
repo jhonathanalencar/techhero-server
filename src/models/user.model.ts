@@ -61,11 +61,8 @@ userSchema.pre('save', function (next) {
 userSchema.methods.comparePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {
-  const promise = bcrypt
-    .compare(candidatePassword, this.password)
-    .catch(() => false);
-
-  return await promise;
+  // eslint-disable-next-line @typescript-eslint/return-await
+  return bcrypt.compare(candidatePassword, this.password).catch(() => false);
 };
 
 const User = mongoose.model<IUser>('User', userSchema);
