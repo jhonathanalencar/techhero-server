@@ -1,5 +1,5 @@
-import { User } from '../../models/user.model';
-import { BadRequestError } from '../../errors/badRequest';
+import { User } from '@/models';
+import { BadRequestError } from '@/errors';
 
 interface CreateUserInput {
   name: string;

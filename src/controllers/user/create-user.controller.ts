@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
 
-import { CreateUserService } from '../../services/user/create-user.service';
+import { CreateUserService } from '@/services/user';
 
 const createUserBody = z
   .object({

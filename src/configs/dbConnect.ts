@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { log } from '../utils/log';
+import { log } from '@/utils/log';
 
 async function connectDB() {
   mongoose.set('strictQuery', false);

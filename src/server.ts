@@ -6,11 +6,11 @@ import 'dotenv/config';
 import 'express-async-errors';
 
 import { connectDB } from './configs/dbConnect';
-import { log } from './utils/log';
-import { logEvents } from './utils/logEvents';
-import { logger } from './middlewares/logger';
-import { userRoutes } from './routes/user.routes';
-import { errorHandler } from './middlewares/errorHandler';
+import { log, logEvents } from './utils';
+
+import { logger, errorHandler } from './middlewares';
+
+import { userRoutes } from './routes';
 
 const app = express();
 
