@@ -9,12 +9,15 @@ import { connectDB } from './configs/dbConnect';
 import { log } from './utils/log';
 import { logEvents } from './utils/logEvents';
 import { logger } from './middlewares/logger';
+import { userRoutes } from './routes/user.routes';
+import { errorHandler } from './middlewares/errorHandler';
 
 const app = express();
 
 connectDB();
 
 app.use(cors());
+app.use(express.json());
 app.use(logger);
 
 app.use('/', express.static(path.resolve(__dirname, '..', 'public')));
@@ -22,6 +25,8 @@ app.use('/', express.static(path.resolve(__dirname, '..', 'public')));
 app.get('/', (request, response) => {
   response.sendFile(path.resolve(__dirname, 'views', 'index.html'));
 });
+
+app.use(userRoutes);
 
 app.all('*', (request, response) => {
   response.status(404);
@@ -34,6 +39,8 @@ app.all('*', (request, response) => {
     response.type('txt').send('404 | Not Found');
   }
 });
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT ?? 3333;
 

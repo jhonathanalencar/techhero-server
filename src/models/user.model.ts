@@ -56,6 +56,8 @@ userSchema.pre('save', function (next) {
 
   const hashedPassword = bcrypt.hashSync(this.password, 10);
   this.password = hashedPassword;
+
+  next();
 });
 
 userSchema.methods.comparePassword = async function (
