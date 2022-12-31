@@ -1,4 +1,5 @@
 import { User } from '../../models/user.model';
+import { BadRequestError } from '../../errors/badRequest';
 
 interface CreateUserInput {
   name: string;
@@ -14,7 +15,7 @@ class CreateUserService {
       .exec();
 
     if (duplicatedUser !== null) {
-      throw new Error('Duplicate email');
+      throw new BadRequestError('Duplicate email');
     }
 
     const user = await User.create(data);
