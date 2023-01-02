@@ -1,10 +1,11 @@
-import { User } from '@/models';
+import { User, UserRoles } from '@/models';
 import { BadRequestError } from '@/errors';
 
 interface CreateUserInput {
   name: string;
   email: string;
   password: string;
+  roles?: UserRoles[];
 }
 
 class CreateUserService {

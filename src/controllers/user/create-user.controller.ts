@@ -18,6 +18,7 @@ const createUserBody = z
       .email({
         message: 'Invalid email',
       }),
+    roles: z.array(z.enum(['user', 'admin', 'manager'])).optional(),
     password: z
       .string({
         required_error: 'Password is required',
@@ -34,7 +35,7 @@ const createUserBody = z
 
 class CreateUserController {
   async handle(request: Request, response: Response) {
-    const { email, name, password } = createUserBody.parse(request.body);
+    const { email, name, password, roles } = createUserBody.parse(request.body);
 
     const service = new CreateUserService();
 
@@ -42,9 +43,15 @@ class CreateUserController {
       email,
       name,
       password,
+      roles,
     });
 
-    return response.status(201).json(user);
+    const { password: UserPassword, ...userWithoutPassword } = Object.assign(
+      {},
+      user.toJSON()
+    );
+
+    return response.status(201).json(userWithoutPassword);
   }
 }
 
