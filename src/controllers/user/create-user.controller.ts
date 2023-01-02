@@ -44,7 +44,7 @@ class CreateUserController {
       password,
     });
 
-    return response.status(201).json({ message: `User ${user.name} created` });
+    return response.status(201).json(user);
   }
 }
 

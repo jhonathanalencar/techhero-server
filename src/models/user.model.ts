@@ -69,4 +69,4 @@ userSchema.methods.comparePassword = async function (
 
 const User = mongoose.model<IUser>('User', userSchema);
 
-export { User, IUser };
+export { User, IUser, UserRoles };
