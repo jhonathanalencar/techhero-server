@@ -5,7 +5,7 @@ import { log } from '@/utils/log';
 async function connectDB() {
   mongoose.set('strictQuery', false);
   try {
-    await mongoose.connect(process.env.MONGO_URI as string);
+    await mongoose.connect(process.env.MONGO_URI);
   } catch (error) {
     log.error(error);
   }

@@ -38,7 +38,7 @@ class LoginService {
 
     const refreshToken = jwt.sign(
       {
-        username: foundUser.name,
+        email: foundUser.email,
       },
       process.env.REFRESH_TOKEN_SECRET,
       {
