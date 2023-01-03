@@ -1,4 +1,5 @@
-import express from 'express';
+import { Router } from 'express';
+
 import {
   CreateUserController,
   DeleteUserController,
@@ -6,12 +7,12 @@ import {
   UpdateUserController,
 } from '@/controllers/user';
 
-const userRoutes = express.Router();
+const userRoutes = Router();
 
-userRoutes.post('/users', new CreateUserController().handle);
-userRoutes.get('/users', new GetUsersController().handle);
+userRoutes.post('/', new CreateUserController().handle);
+userRoutes.get('/', new GetUsersController().handle);
 
-userRoutes.put('/users/:id', new UpdateUserController().handle);
-userRoutes.delete('/users/:id', new DeleteUserController().handle);
+userRoutes.put('/:id', new UpdateUserController().handle);
+userRoutes.delete('/:id', new DeleteUserController().handle);
 
 export { userRoutes };
