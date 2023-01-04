@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import { verifyJWT } from '@/middlewares/verifyJWT';
+
 import {
   CreateUserController,
   DeleteUserController,
@@ -10,6 +12,9 @@ import {
 const userRoutes = Router();
 
 userRoutes.post('/', new CreateUserController().handle);
+
+userRoutes.use(verifyJWT);
+
 userRoutes.get('/', new GetUsersController().handle);
 
 userRoutes.put('/:id', new UpdateUserController().handle);
