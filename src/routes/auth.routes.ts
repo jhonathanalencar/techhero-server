@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import { loginLimiter } from '@/middlewares';
+
 import {
   LoginController,
   LogoutController,
@@ -8,7 +10,7 @@ import {
 
 const authRoutes = Router();
 
-authRoutes.post('/', new LoginController().handle);
+authRoutes.post('/', loginLimiter, new LoginController().handle);
 authRoutes.post('/refresh', new RefreshController().handle);
 authRoutes.post('/logout', new LogoutController().handle);
 
