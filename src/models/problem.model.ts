@@ -4,7 +4,7 @@ interface IProblem {
   _id: string;
   title: string;
   description: string;
-  createdBy: mongoose.Types.ObjectId;
+  owner: mongoose.Types.ObjectId;
   solution?: mongoose.Types.ObjectId;
   solved?: Date;
   solvedBy?: mongoose.Types.ObjectId;
@@ -23,7 +23,7 @@ const problemSchema = new mongoose.Schema<IProblem>(
       type: String,
       required: [true, 'Description is required'],
     },
-    createdBy: {
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'User ID is required'],
