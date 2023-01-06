@@ -1,5 +1,5 @@
 import { BadRequestError, NotFoundError } from '@/errors';
-import { Problem } from '@/models';
+import { Problem, Solution } from '@/models';
 import { Types } from 'mongoose';
 
 interface MarkProblemAsSolvedInput {
@@ -20,11 +20,19 @@ class MarkProblemAsSolvedService {
       throw new BadRequestError('Problem is unenabled');
     }
 
+    const solution = await Solution.findById(data.solutionId).exec();
+
+    if (solution === null) {
+      throw new NotFoundError('Solution not found');
+    }
+
+    solution.accepted = true;
+
     problem.solved = new Date();
     problem.solvedBy = data.solutionOwner as unknown as Types.ObjectId;
     problem.solution = data.solutionId as unknown as Types.ObjectId;
 
-    await problem.save();
+    await Promise.all([solution.save(), problem.save()]);
   }
 }
 
