@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import { verifyJWT } from '@/middlewares/verifyJWT';
+
 import {
   CreateProblemController,
   GetProblemsController,
@@ -9,6 +11,8 @@ import {
 } from '@/controllers/problem';
 
 const problemRoutes = Router();
+
+problemRoutes.use(verifyJWT);
 
 problemRoutes.post('/', new CreateProblemController().handle);
 problemRoutes.get('/', new GetProblemsController().handle);

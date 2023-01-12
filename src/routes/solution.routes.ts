@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import { verifyJWT } from '@/middlewares/verifyJWT';
+
 import {
   CreateSolutionController,
   DeleteSolutionController,
@@ -8,6 +10,8 @@ import {
 } from '@/controllers/solution';
 
 const solutionRoutes = Router();
+
+solutionRoutes.use(verifyJWT);
 
 solutionRoutes.post('/', new CreateSolutionController().handle);
 solutionRoutes.get('/', new GetSolutionsController().handle);
